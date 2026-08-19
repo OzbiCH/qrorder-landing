@@ -10,62 +10,6 @@ interface FormData {
   message: string;
 }
 
-// Custom QR Order Logo Component
-function QROrderLogo({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 200 200"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      {/* Q - mit integrierter Gabel */}
-      <g>
-        {/* Q Kreis */}
-        <circle cx="50" cy="100" r="40" fill="none" stroke="#DC2626" strokeWidth="8" />
-        
-        {/* Q Schwanz */}
-        <line x1="85" y1="120" x2="95" y2="140" stroke="#DC2626" strokeWidth="8" strokeLinecap="round" />
-        
-        {/* Gabel unten (3 Zinken) */}
-        <g>
-          {/* Linke Zinke */}
-          <line x1="35" y1="140" x2="35" y2="160" stroke="#DC2626" strokeWidth="6" strokeLinecap="round" />
-          {/* Mittlere Zinke */}
-          <line x1="50" y1="145" x2="50" y2="165" stroke="#DC2626" strokeWidth="6" strokeLinecap="round" />
-          {/* Rechte Zinke */}
-          <line x1="65" y1="140" x2="65" y2="160" stroke="#DC2626" strokeWidth="6" strokeLinecap="round" />
-          {/* Gabelgriff */}
-          <line x1="50" y1="138" x2="50" y2="145" stroke="#DC2626" strokeWidth="7" strokeLinecap="round" />
-        </g>
-      </g>
-
-      {/* O - wie ein Teller */}
-      <g>
-        {/* Teller Umriss */}
-        <circle cx="150" cy="100" r="38" fill="none" stroke="#1F2937" strokeWidth="7" />
-        
-        {/* Teller-Effekt (innerer Kreis) */}
-        <circle cx="150" cy="100" r="32" fill="none" stroke="#1F2937" strokeWidth="2" opacity="0.5" />
-        
-        {/* Teller-Rand (oberer Bogen für 3D-Effekt) */}
-        <ellipse cx="150" cy="95" rx="38" ry="12" fill="none" stroke="#1F2937" strokeWidth="2" opacity="0.3" />
-      </g>
-
-      {/* Text unter dem Logo */}
-      <text
-        x="100"
-        y="190"
-        textAnchor="middle"
-        fontSize="16"
-        fontWeight="700"
-        fill="#1F2937"
-      >
-        QR Order
-      </text>
-    </svg>
-  );
-}
-
 // Splash Screen Component
 function SplashScreen({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
@@ -118,7 +62,11 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
       {/* Animated Logo */}
       <div className="splash-animate absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="w-48 h-48 sm:w-64 sm:h-64">
-          <QROrderLogo />
+          <img 
+            src="/logo-primary.png" 
+            alt="QR Order" 
+            className="w-full h-full object-contain"
+          />
         </div>
       </div>
 
@@ -191,9 +139,11 @@ export default function QROrderLanding() {
       {/* Navigation */}
       <nav className="sticky top-0 bg-white border-b border-slate-200 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          <div className="w-12 sm:w-16 h-12 sm:h-16">
-            <QROrderLogo className="w-full h-full" />
-          </div>
+          <img 
+            src="/logo-primary.png" 
+            alt="QR Order Logo" 
+            className="h-12 sm:h-16 w-auto"
+          />
           
           {/* Desktop Menu */}
           <div className="hidden md:flex gap-6 sm:gap-8 items-center">
@@ -704,9 +654,11 @@ export default function QROrderLanding() {
           <div className="border-t border-slate-200 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-slate-600 text-xs sm:text-sm">© 2024 QR Order. Alle Rechte vorbehalten.</p>
             <div className="flex items-center gap-3 sm:gap-4">
-              <div className="w-8 sm:w-10 h-8 sm:h-10">
-                <QROrderLogo className="w-full h-full" />
-              </div>
+              <img 
+                src="/logo-primary.png" 
+                alt="QR Order Logo" 
+                className="h-6 sm:h-8 w-auto"
+              />
               <p className="text-slate-600 text-xs sm:text-sm">
                 Ein Produkt von{' '}
                 <a 
