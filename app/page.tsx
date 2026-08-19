@@ -69,7 +69,7 @@ export default function QROrderLanding() {
           <img 
             src="/logo-primary.png" 
             alt="QR Order Logo" 
-            className="h-10 sm:h-12 w-auto"
+          className="h-16 sm:h-24 w-auto"
           />
           
           {/* Desktop Menu */}
