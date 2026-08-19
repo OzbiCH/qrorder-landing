@@ -10,35 +10,40 @@ interface FormData {
   message: string;
 }
 
-// Splash Screen Component
-function SplashScreen({ onComplete }: { onComplete: () => void }) {
+// Parallax Splash Screen Component
+function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      onComplete();
-    }, 3500);
+      // Simulate scroll animation
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 2;
+        setScrollProgress(Math.min(progress, 100));
+        
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => onComplete(), 500);
+        }
+      }, 30);
+      
+      return () => clearInterval(interval);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
 
+  const logoScale = 1 - scrollProgress * 0.004; // Gradually shrinks
+  const logoX = scrollProgress * 1.5; // Moves left
+  const contentY = scrollProgress * 0.5; // Moves up slowly
+  const opacity = Math.max(0, 1 - scrollProgress * 0.02);
+
   return (
     <div className="fixed inset-0 bg-white z-50 flex items-center justify-center overflow-hidden">
       <style jsx>{`
-        @keyframes moveToTopLeft {
+        @keyframes fadeOut {
           0% {
-            transform: scale(1) translate(0, 0);
-            opacity: 1;
-          }
-          100% {
-            transform: scale(0.15) translate(-280px, -320px);
-            opacity: 1;
-          }
-        }
-
-        @keyframes fadeOutSplash {
-          0% {
-            opacity: 1;
-          }
-          90% {
             opacity: 1;
           }
           100% {
@@ -47,21 +52,27 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
           }
         }
 
-        .splash-animate {
-          animation: moveToTopLeft 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.5s forwards;
-        }
-
-        .splash-bg {
-          animation: fadeOutSplash 0.5s ease-in-out 3s forwards;
+        .parallax-splash {
+          animation: fadeOut 0.8s ease-out forwards;
+          animation-delay: 3.5s;
         }
       `}</style>
 
-      {/* Background fade out */}
-      <div className="splash-bg absolute inset-0 bg-white"></div>
+      <div className="parallax-splash absolute inset-0 bg-white"></div>
 
-      {/* Animated Logo */}
-      <div className="splash-animate absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-48 h-48 sm:w-64 sm:h-64">
+      {/* Logo - Parallax movimento */}
+      <div 
+        className="absolute transition-all duration-100 ease-out"
+        style={{
+          transform: `translate(-${logoX}px, 0) scale(${logoScale})`,
+          opacity: opacity,
+          top: '50%',
+          left: '50%',
+          marginLeft: '-120px',
+          marginTop: '-120px',
+        }}
+      >
+        <div className="w-60 h-60">
           <img 
             src="/logo-primary.png" 
             alt="QR Order" 
@@ -70,9 +81,21 @@ function SplashScreen({ onComplete }: { onComplete: () => void }) {
         </div>
       </div>
 
-      {/* Loading text */}
-      <div className="absolute bottom-20 text-center z-10">
-        <p className="text-slate-600 text-sm animate-pulse">QR Order wird geladen...</p>
+      {/* Content - Slides up */}
+      <div 
+        className="absolute bottom-20 text-center z-10 transition-all duration-100 ease-out"
+        style={{
+          transform: `translateY(${contentY * 2}px)`,
+          opacity: Math.max(0, 1 - scrollProgress * 0.01),
+        }}
+      >
+        <p className="text-slate-600 text-sm font-semibold">QR Order lädt...</p>
+        <div className="mt-4 w-48 h-1 bg-slate-200 rounded-full overflow-hidden mx-auto">
+          <div 
+            className="h-full bg-red-600 transition-all duration-100"
+            style={{ width: `${scrollProgress}%` }}
+          ></div>
+        </div>
       </div>
     </div>
   );
@@ -131,18 +154,18 @@ export default function QROrderLanding() {
   };
 
   if (showSplash) {
-    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+    return <ParallaxSplash onComplete={() => setShowSplash(false)} />;
   }
 
   return (
     <div className="bg-white text-slate-900">
       {/* Navigation */}
       <nav className="sticky top-0 bg-white border-b border-slate-200 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
           <img 
             src="/logo-primary.png" 
             alt="QR Order Logo" 
-            className="h-12 sm:h-16 w-auto"
+            className="h-14 sm:h-20 w-auto"
           />
           
           {/* Desktop Menu */}
@@ -657,7 +680,7 @@ export default function QROrderLanding() {
               <img 
                 src="/logo-primary.png" 
                 alt="QR Order Logo" 
-                className="h-6 sm:h-8 w-auto"
+                className="h-8 sm:h-10 w-auto"
               />
               <p className="text-slate-600 text-xs sm:text-sm">
                 Ein Produkt von{' '}
