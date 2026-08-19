@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { ChevronRight, Check, Menu, Smartphone, TrendingUp, Users, Calendar, MapPin } from 'lucide-react';
 
 export default function QROrderProfessional() {
-  const [hoveredPlan, setHoveredPlan] = useState(null);
+ const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
 
   return (
     <div className="bg-white text-slate-900 min-h-screen">
