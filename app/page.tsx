@@ -68,11 +68,11 @@ function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
           opacity: opacity,
           top: '50%',
           left: '50%',
-          marginLeft: '-120px',
-          marginTop: '-120px',
+          marginLeft: '-160px',
+          marginTop: '-160px',
         }}
       >
-        <div className="w-60 h-60">
+        <div className="w-80 h-80">
           <img 
             src="/logo-primary.png" 
             alt="QR Order" 
@@ -161,11 +161,11 @@ export default function QROrderLanding() {
     <div className="bg-white text-slate-900">
       {/* Navigation */}
       <nav className="sticky top-0 bg-white border-b border-slate-200 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
           <img 
             src="/logo-primary.png" 
             alt="QR Order Logo" 
-            className="h-14 sm:h-20 w-auto"
+            className="h-20 sm:h-32 w-auto"
           />
           
           {/* Desktop Menu */}
@@ -680,7 +680,7 @@ export default function QROrderLanding() {
               <img 
                 src="/logo-primary.png" 
                 alt="QR Order Logo" 
-                className="h-8 sm:h-10 w-auto"
+                className="h-10 sm:h-14 w-auto"
               />
               <p className="text-slate-600 text-xs sm:text-sm">
                 Ein Produkt von{' '}
