@@ -1,22 +1,56 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronRight, Check, Menu, Smartphone, TrendingUp, Users, Calendar, MapPin } from 'lucide-react';
+import { ChevronRight, Check, Menu, Smartphone, TrendingUp, Users, Calendar, MapPin, X } from 'lucide-react';
 
 export default function QROrderProfessional() {
- const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
+  const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    restaurant: '',
+    message: ''
+  });
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Später: API call zum Absenden
+    console.log('Form submitted:', formData);
+    alert('Danke! Wir kontaktieren dich in Kürze.');
+    setShowModal(false);
+    setFormData({ name: '', email: '', restaurant: '', message: '' });
+  };
+
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <div className="bg-white text-slate-900 min-h-screen">
       {/* Navigation */}
-      <nav className="sticky top-0 bg-white border-b border-slate-200 z-40">
+      <nav className="sticky top-0 bg-white border-b border-slate-200 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-2xl font-bold text-slate-900">QR Order</div>
+          <div className="flex items-center gap-2">
+            <img src="/Designer (13).png" alt="QR Order Logo" className="h-12 w-auto" />
+          </div>
           <div className="flex gap-8 items-center">
-            <a href="#funktioniert" className="text-sm text-slate-600 hover:text-slate-900 font-medium">Wie es funktioniert</a>
-            <a href="#preise" className="text-sm text-slate-600 hover:text-slate-900 font-medium">Preise</a>
-            <a href="#restaurants" className="text-sm text-slate-600 hover:text-slate-900 font-medium">Restaurants</a>
-            <button className="bg-red-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 transition">
+            <button onClick={() => scrollToSection('funktioniert')} className="text-sm text-slate-600 hover:text-slate-900 font-medium transition">Wie es funktioniert</button>
+            <button onClick={() => scrollToSection('preise')} className="text-sm text-slate-600 hover:text-slate-900 font-medium transition">Preise</button>
+            <button onClick={() => scrollToSection('restaurants')} className="text-sm text-slate-600 hover:text-slate-900 font-medium transition">Restaurants</button>
+            <button 
+              onClick={() => setShowModal(true)}
+              className="bg-red-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 transition"
+            >
               Kostenlos starten
             </button>
           </div>
@@ -38,7 +72,10 @@ export default function QROrderProfessional() {
             </p>
             
             <div className="flex gap-4 mb-12">
-              <button className="bg-red-600 text-white px-7 py-3 rounded-lg font-semibold hover:bg-red-700 transition flex items-center gap-2">
+              <button 
+                onClick={() => setShowModal(true)}
+                className="bg-red-600 text-white px-7 py-3 rounded-lg font-semibold hover:bg-red-700 transition flex items-center gap-2"
+              >
                 Jetzt starten
                 <ChevronRight size={18} />
               </button>
@@ -67,15 +104,12 @@ export default function QROrderProfessional() {
           {/* Right - Simple Phone Mockup */}
           <div className="flex justify-center">
             <div className="bg-slate-100 rounded-3xl p-4 shadow-lg w-80 h-96 flex flex-col">
-              {/* Phone Screen */}
               <div className="bg-white rounded-2xl flex-1 flex flex-col overflow-hidden">
-                {/* Header */}
                 <div className="bg-slate-900 text-white px-4 py-3">
                   <p className="text-sm font-semibold">Royal Restaurant</p>
                   <p className="text-xs text-slate-400">Heute geöffnet bis 23:00</p>
                 </div>
                 
-                {/* Menu Items */}
                 <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
                   <div className="border border-slate-200 rounded-lg p-3">
                     <p className="font-semibold text-sm text-slate-900">Ribeye Steak</p>
@@ -89,7 +123,6 @@ export default function QROrderProfessional() {
                   </div>
                 </div>
 
-                {/* Footer */}
                 <div className="bg-red-600 text-white px-4 py-3 text-center text-sm font-semibold">
                   Zum Bestellen scannen
                 </div>
@@ -106,7 +139,6 @@ export default function QROrderProfessional() {
           <p className="text-center text-slate-600 mb-16 text-lg">In 3 einfachen Schritten zum digitalen Menü</p>
 
           <div className="grid grid-cols-3 gap-8">
-            {/* Step 1 */}
             <div>
               <div className="bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-4">1</div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Menü hochladen</h3>
@@ -115,7 +147,6 @@ export default function QROrderProfessional() {
               </p>
             </div>
 
-            {/* Step 2 */}
             <div>
               <div className="bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-4">2</div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">QR-Codes drucken</h3>
@@ -124,7 +155,6 @@ export default function QROrderProfessional() {
               </p>
             </div>
 
-            {/* Step 3 */}
             <div>
               <div className="bg-red-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg mb-4">3</div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">Gäste scannen</h3>
@@ -141,7 +171,6 @@ export default function QROrderProfessional() {
         <h2 className="text-4xl font-bold text-slate-900 mb-16 text-center">Was QR Order anders macht</h2>
 
         <div className="grid grid-cols-2 gap-12">
-          {/* Feature 1 */}
           <div className="flex gap-4">
             <Menu className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
             <div>
@@ -150,7 +179,6 @@ export default function QROrderProfessional() {
             </div>
           </div>
 
-          {/* Feature 2 */}
           <div className="flex gap-4">
             <Smartphone className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
             <div>
@@ -159,7 +187,6 @@ export default function QROrderProfessional() {
             </div>
           </div>
 
-          {/* Feature 3 */}
           <div className="flex gap-4">
             <TrendingUp className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
             <div>
@@ -168,7 +195,6 @@ export default function QROrderProfessional() {
             </div>
           </div>
 
-          {/* Feature 4 */}
           <div className="flex gap-4">
             <Users className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
             <div>
@@ -177,7 +203,6 @@ export default function QROrderProfessional() {
             </div>
           </div>
 
-          {/* Feature 5 */}
           <div className="flex gap-4">
             <Calendar className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
             <div>
@@ -186,7 +211,6 @@ export default function QROrderProfessional() {
             </div>
           </div>
 
-          {/* Feature 6 */}
           <div className="flex gap-4">
             <MapPin className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
             <div>
@@ -203,7 +227,6 @@ export default function QROrderProfessional() {
           <h2 className="text-4xl font-bold text-slate-900 mb-16 text-center">Restaurants vertrauen QR Order</h2>
 
           <div className="grid grid-cols-3 gap-8">
-            {/* Royal */}
             <div className="bg-white rounded-lg border border-slate-200 p-8">
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-slate-900">Royal</h3>
@@ -235,7 +258,6 @@ export default function QROrderProfessional() {
               </div>
             </div>
 
-            {/* KULT */}
             <div className="bg-white rounded-lg border border-slate-200 p-8">
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-slate-900">KULT Shisha Bar</h3>
@@ -267,7 +289,6 @@ export default function QROrderProfessional() {
               </div>
             </div>
 
-            {/* Golden Club */}
             <div className="bg-white rounded-lg border border-slate-200 p-8">
               <div className="mb-6">
                 <h3 className="text-2xl font-bold text-slate-900">Golden Club Lounge</h3>
@@ -308,12 +329,7 @@ export default function QROrderProfessional() {
         <p className="text-center text-slate-600 mb-16 text-lg">Wähle den Plan, der zu dir passt. Upgrade jederzeit.</p>
 
         <div className="grid grid-cols-4 gap-6">
-          {/* Basic */}
-          <div 
-            className="border border-slate-200 rounded-lg p-8 hover:border-slate-300 transition"
-            onMouseEnter={() => setHoveredPlan('basic')}
-            onMouseLeave={() => setHoveredPlan(null)}
-          >
+          <div className="border border-slate-200 rounded-lg p-8 hover:border-slate-300 transition">
             <h3 className="text-2xl font-bold text-slate-900 mb-2">Basic</h3>
             <p className="text-slate-600 text-sm mb-6">Zum Start</p>
             
@@ -341,17 +357,15 @@ export default function QROrderProfessional() {
               </li>
             </ul>
 
-            <button className="w-full border-2 border-slate-300 text-slate-900 py-2 rounded-lg font-semibold hover:bg-slate-50 transition">
+            <button 
+              onClick={() => setShowModal(true)}
+              className="w-full border-2 border-slate-300 text-slate-900 py-2 rounded-lg font-semibold hover:bg-slate-50 transition"
+            >
               Starten
             </button>
           </div>
 
-          {/* Pro - Featured */}
-          <div 
-            className="border-2 border-red-600 rounded-lg p-8 bg-slate-50 relative"
-            onMouseEnter={() => setHoveredPlan('pro')}
-            onMouseLeave={() => setHoveredPlan(null)}
-          >
+          <div className="border-2 border-red-600 rounded-lg p-8 bg-slate-50 relative">
             <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
               <span className="bg-red-600 text-white px-3 py-1 rounded-full text-xs font-bold">BELIEBT</span>
             </div>
@@ -380,23 +394,17 @@ export default function QROrderProfessional() {
                 <Check size={16} className="text-red-600" />
                 Kitchen Display
               </li>
-              <li className="flex items-center gap-2 text-slate-700">
-                <Check size={16} className="text-red-600" />
-                Priorität Support
-              </li>
             </ul>
 
-            <button className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition">
+            <button 
+              onClick={() => setShowModal(true)}
+              className="w-full bg-red-600 text-white py-2 rounded-lg font-semibold hover:bg-red-700 transition"
+            >
               Starten
             </button>
           </div>
 
-          {/* Business */}
-          <div 
-            className="border border-slate-200 rounded-lg p-8 hover:border-slate-300 transition"
-            onMouseEnter={() => setHoveredPlan('business')}
-            onMouseLeave={() => setHoveredPlan(null)}
-          >
+          <div className="border border-slate-200 rounded-lg p-8 hover:border-slate-300 transition">
             <h3 className="text-2xl font-bold text-slate-900 mb-2">Business</h3>
             <p className="text-slate-600 text-sm mb-6">Analytics & Zahlung</p>
             
@@ -418,23 +426,17 @@ export default function QROrderProfessional() {
                 <Check size={16} className="text-red-600" />
                 Zahlungsintegration
               </li>
-              <li className="flex items-center gap-2 text-slate-700">
-                <Check size={16} className="text-red-600" />
-                Custom Branding
-              </li>
             </ul>
 
-            <button className="w-full border-2 border-slate-300 text-slate-900 py-2 rounded-lg font-semibold hover:bg-slate-50 transition">
+            <button 
+              onClick={() => setShowModal(true)}
+              className="w-full border-2 border-slate-300 text-slate-900 py-2 rounded-lg font-semibold hover:bg-slate-50 transition"
+            >
               Starten
             </button>
           </div>
 
-          {/* Enterprise */}
-          <div 
-            className="border border-slate-200 rounded-lg p-8 hover:border-slate-300 transition"
-            onMouseEnter={() => setHoveredPlan('enterprise')}
-            onMouseLeave={() => setHoveredPlan(null)}
-          >
+          <div className="border border-slate-200 rounded-lg p-8 hover:border-slate-300 transition">
             <h3 className="text-2xl font-bold text-slate-900 mb-2">Enterprise</h3>
             <p className="text-slate-600 text-sm mb-6">Individuelle Lösung</p>
             
@@ -455,13 +457,12 @@ export default function QROrderProfessional() {
                 <Check size={16} className="text-red-600" />
                 Custom Development
               </li>
-              <li className="flex items-center gap-2 text-slate-700">
-                <Check size={16} className="text-red-600" />
-                SLA Garantie
-              </li>
             </ul>
 
-            <button className="w-full border-2 border-red-600 text-red-600 py-2 rounded-lg font-semibold hover:bg-red-50 transition">
+            <button 
+              onClick={() => setShowModal(true)}
+              className="w-full border-2 border-red-600 text-red-600 py-2 rounded-lg font-semibold hover:bg-red-50 transition"
+            >
               Kontaktieren
             </button>
           </div>
@@ -479,42 +480,13 @@ export default function QROrderProfessional() {
           <p className="text-xl text-slate-300 mb-8">
             Starte noch heute. 14 Tage kostenlos. Keine Kreditkarte nötig.
           </p>
-          <button className="bg-red-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-red-700 transition inline-flex items-center gap-2">
+          <button 
+            onClick={() => setShowModal(true)}
+            className="bg-red-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-red-700 transition inline-flex items-center gap-2"
+          >
             Kostenlos testen
             <ChevronRight size={20} />
           </button>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="max-w-4xl mx-auto px-6 py-20">
-        <h2 className="text-3xl font-bold text-slate-900 mb-12 text-center">Häufige Fragen</h2>
-
-        <div className="space-y-6">
-          <div className="border border-slate-200 rounded-lg p-6">
-            <h3 className="font-bold text-slate-900 text-lg mb-2">Wie schnell kann ich starten?</h3>
-            <p className="text-slate-600">Du brauchst etwa 5-10 Minuten, um dein Menü hochzuladen. Dann generierst du die QR-Codes und druckst sie. Nach 20 Minuten bist du live.</p>
-          </div>
-
-          <div className="border border-slate-200 rounded-lg p-6">
-            <h3 className="font-bold text-slate-900 text-lg mb-2">Kann ich mein Menü später ändern?</h3>
-            <p className="text-slate-600">Ja, jederzeit. Die QR-Codes bleiben gültig. Wenn du Preise änderst oder ein Gericht entfernst, sehen deine Gäste sofort die neuen Infos.</p>
-          </div>
-
-          <div className="border border-slate-200 rounded-lg p-6">
-            <h3 className="font-bold text-slate-900 text-lg mb-2">Brauche ich eine App zu installieren?</h3>
-            <p className="text-slate-600">Nein. Deine Gäste scannen den QR-Code, und die Speisekarte öffnet sich direkt im Browser. Kein Download nötig.</p>
-          </div>
-
-          <div className="border border-slate-200 rounded-lg p-6">
-            <h3 className="font-bold text-slate-900 text-lg mb-2">Kostet ein Upgrade sofort mehr?</h3>
-            <p className="text-slate-600">Nein. Du entscheidest, wann du upgraden möchtest. Basic reicht für viele Restaurants völlig aus.</p>
-          </div>
-
-          <div className="border border-slate-200 rounded-lg p-6">
-            <h3 className="font-bold text-slate-900 text-lg mb-2">Wie ist es mit Datenschutz?</h3>
-            <p className="text-slate-600">Deine Daten bleiben in der Schweiz. DSGVO-konform. Wir geben nichts an Dritte weiter.</p>
-          </div>
         </div>
       </section>
 
@@ -556,15 +528,97 @@ export default function QROrderProfessional() {
 
           <div className="border-t border-slate-200 pt-8 flex justify-between items-center">
             <p className="text-slate-600 text-sm">© 2024 QR Order. Alle Rechte vorbehalten.</p>
-            <p className="text-slate-600 text-sm">
-              Ein Produkt von{' '}
-              <a href="https://ozbi.ch" className="text-red-600 font-semibold hover:underline">
-                Ozbi Gruppe
-              </a>
-            </p>
+            <div className="flex items-center gap-4">
+              <img src="/Designer (13).png" alt="QR Order Logo" className="h-8 w-auto" />
+              <p className="text-slate-600 text-sm">
+                Ein Produkt von{' '}
+                <a href="https://ozbi.ch" className="text-red-600 font-semibold hover:underline">
+                  Ozbi Gruppe
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </footer>
+
+      {/* Contact Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-8 relative">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-900"
+            >
+              <X size={24} />
+            </button>
+
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">Kostenlos starten</h2>
+            <p className="text-slate-600 mb-6">Füllen Sie das Formular aus und wir kontaktieren Sie in Kürze.</p>
+
+            <form onSubmit={handleFormSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleFormChange}
+                  required
+                  className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-red-600"
+                  placeholder="Dein Name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleFormChange}
+                  required
+                  className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-red-600"
+                  placeholder="deine@email.ch"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Restaurant/Betrieb</label>
+                <input
+                  type="text"
+                  name="restaurant"
+                  value={formData.restaurant}
+                  onChange={handleFormChange}
+                  className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-red-600"
+                  placeholder="Dein Restaurant"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-900 mb-2">Nachricht</label>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleFormChange}
+                  className="w-full border border-slate-300 rounded-lg px-4 py-2 focus:outline-none focus:border-red-600 h-24 resize-none"
+                  placeholder="Wie können wir dir helfen?"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition"
+              >
+                Kostenlos starten
+              </button>
+            </form>
+
+            <p className="text-xs text-slate-500 text-center mt-4">
+              Wir werden dich in Kürze kontaktieren. Kein Spam, versprochen! 🎯
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
