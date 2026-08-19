@@ -72,7 +72,7 @@ function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
           marginTop: '-160px',
         }}
       >
-        <div className="w-96 h-96">
+        <div className="w-80 h-80">
           <img 
             src="/logo-primary.png" 
             alt="QR Order" 
