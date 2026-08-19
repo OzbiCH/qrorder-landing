@@ -66,7 +66,7 @@ export default function QROrderLanding() {
           <img 
             src="/logo-primary.png" 
             alt="QR Order Logo" 
-            className="h-10 w-auto"
+            className="h-20 w-auto"
           />
           <div className="flex gap-8 items-center">
             <button 
