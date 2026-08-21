@@ -16,7 +16,6 @@ function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Simulate scroll animation
       let progress = 0;
       const interval = setInterval(() => {
         progress += 2;
@@ -34,9 +33,9 @@ function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
     return () => clearTimeout(timer);
   }, [onComplete]);
 
-  const logoScale = 1 - scrollProgress * 0.004; // Gradually shrinks
-  const logoX = scrollProgress * 1.5; // Moves left
-  const contentY = scrollProgress * 0.5; // Moves up slowly
+  const logoScale = 1 - scrollProgress * 0.004;
+  const logoX = scrollProgress * 1.5;
+  const contentY = scrollProgress * 0.5;
   const opacity = Math.max(0, 1 - scrollProgress * 0.02);
 
   return (
@@ -60,7 +59,6 @@ function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
 
       <div className="parallax-splash absolute inset-0 bg-white"></div>
 
-      {/* Logo - Parallax movimento */}
       <div 
         className="absolute transition-all duration-100 ease-out"
         style={{
@@ -74,14 +72,13 @@ function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
       >
         <div className="w-80 h-80">
           <img 
-            src="/logo-primary.png" 
-            alt="QR Order" 
+            src="/tabscan-logo.png" 
+            alt="TabScan" 
             className="w-full h-full object-contain"
           />
         </div>
       </div>
 
-      {/* Content - Slides up */}
       <div 
         className="absolute bottom-20 text-center z-10 transition-all duration-100 ease-out"
         style={{
@@ -89,7 +86,7 @@ function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
           opacity: Math.max(0, 1 - scrollProgress * 0.01),
         }}
       >
-        <p className="text-slate-600 text-sm font-semibold">QR Order lädt...</p>
+        <p className="text-slate-600 text-sm font-semibold">TabScan wird geladen...</p>
         <div className="mt-4 w-48 h-1 bg-slate-200 rounded-full overflow-hidden mx-auto">
           <div 
             className="h-full bg-red-600 transition-all duration-100"
@@ -101,7 +98,7 @@ function ParallaxSplash({ onComplete }: { onComplete: () => void }) {
   );
 }
 
-export default function QROrderLanding() {
+export default function TabScanLanding() {
   const [showSplash, setShowSplash] = useState(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
@@ -163,9 +160,9 @@ export default function QROrderLanding() {
       <nav className="sticky top-0 bg-white border-b border-slate-200 z-40 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
           <img 
-            src="/logo-primary.png" 
-            alt="QR Order Logo" 
-            className="h-30 sm:h-45 w-auto"
+            src="/tabscan-logo.png" 
+            alt="TabScan Logo" 
+            className="h-20 sm:h-32 w-auto"
           />
           
           {/* Desktop Menu */}
@@ -241,13 +238,13 @@ export default function QROrderLanding() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
           <div>
             <p className="text-red-600 text-xs sm:text-sm font-bold uppercase tracking-wide mb-4">
-              Digitale Speisekarte für Schweizer Restaurants
+              Digitale Lösungen für Gastronomie
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight">
               Dein Menü,<br />digital. Einfach.
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-slate-600 mb-6 sm:mb-8 leading-relaxed">
-              QR Order ist die digitale Speisekarte, die sich deinem Restaurant anpasst. Nicht umgekehrt. Egal, ob du nur ein Menü brauchst oder vollständige Bestellfunktion—wir bauen, was du brauchst.
+              TabScan ist die digitale Lösung, die sich deinem Restaurant anpasst. Nicht umgekehrt. Egal, ob du nur ein Menü brauchst oder vollständige Bestellfunktion—wir bauen, was du brauchst.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12">
@@ -346,7 +343,7 @@ export default function QROrderLanding() {
 
       {/* Features */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-8 sm:mb-16 text-center">Was QR Order anders macht</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-8 sm:mb-16 text-center">Was TabScan anders macht</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-12">
           <div className="flex gap-4">
@@ -402,7 +399,7 @@ export default function QROrderLanding() {
       {/* Testimonials */}
       <section id="restaurants" className="bg-slate-50 py-12 sm:py-20 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-8 sm:mb-16 text-center">Restaurants vertrauen QR Order</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 mb-8 sm:mb-16 text-center">Restaurants vertrauen TabScan</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg border border-slate-200 p-6 sm:p-8">
@@ -411,7 +408,7 @@ export default function QROrderLanding() {
                 <p className="text-slate-600 text-xs sm:text-sm">Premium Fine Dining, Zürich</p>
               </div>
               <p className="text-slate-700 mb-6 leading-relaxed italic text-sm sm:text-base">
-                "Unsere Gäste lieben die digitale Erfahrung. Wir sehen 3x mehr Bestellungen über QR Order. Das Menü sieht eleganter aus als auf Papier."
+                "Unsere Gäste lieben die digitale Erfahrung. Wir sehen 3x mehr Bestellungen über TabScan. Das Menü sieht eleganter aus als auf Papier."
               </p>
               <div className="flex items-center justify-between">
                 <div>
@@ -624,7 +621,7 @@ export default function QROrderLanding() {
       {/* Final CTA */}
       <section className="bg-slate-900 text-white py-12 sm:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Bereit für digitale Speisekarten?</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Bereit für digitale Lösungen?</h2>
           <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-8">
             Starte noch heute. 14 Tage kostenlos. Keine Kreditkarte nötig.
           </p>
@@ -675,12 +672,12 @@ export default function QROrderLanding() {
           </div>
 
           <div className="border-t border-slate-200 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-slate-600 text-xs sm:text-sm">© 2024 QR Order. Alle Rechte vorbehalten.</p>
+            <p className="text-slate-600 text-xs sm:text-sm">© 2024 TabScan. Alle Rechte vorbehalten.</p>
             <div className="flex items-center gap-3 sm:gap-4">
               <img 
-                src="/logo-primary.png" 
-                alt="QR Order Logo" 
-                className="h-10 sm:h-14 w-auto"
+                src="/tabscan-icon.png" 
+                alt="TabScan Logo" 
+                className="h-8 sm:h-10 w-auto"
               />
               <p className="text-slate-600 text-xs sm:text-sm">
                 Ein Produkt von{' '}
