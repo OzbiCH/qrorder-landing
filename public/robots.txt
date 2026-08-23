@@ -1,0 +1,25 @@
+﻿# TabScan - robots.txt for SEO
+# Allow all bots to crawl and index
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /*?*sort=
+Disallow: /*?*page=
+
+# Crawl delay (in seconds)
+Crawl-delay: 1
+
+# Specific rules for Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Sitemap location
+Sitemap: https://tabscan.ch/sitemap.xml
+
+# Cache directives
+# Tell search engines to check back in 7 days
+# Expire-time: 604800
