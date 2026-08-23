@@ -25,7 +25,7 @@ function MinimalSplash({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setOpacity(0);
-      setTimeout(onComplete, 800);
+      setTimeout(onComplete, 100);
     }, 2500);
     return () => clearTimeout(timer);
   }, [onComplete]);
