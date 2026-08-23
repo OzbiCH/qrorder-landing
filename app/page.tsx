@@ -149,7 +149,7 @@ function MinimalSplash({ onComplete }: { onComplete: () => void }) {
         </div>
         <div className="mt-8 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.35em] text-zinc-400">
           <ScanLine className="h-4 w-4 animate-pulse text-rose-500" />
-          Restaurant OS
+          TabScan
         </div>
       </div>
     </div>
