@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChevronRight, Check, MenuIcon, ChevronDown, X, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 interface FormData {
   name: string;
@@ -160,8 +161,9 @@ function FAQItemComponent({ item }: { item: FAQItem }) {
 // MAIN COMPONENT
 // ==========================================
 export default function TabScanLanding() {
-  const [showSplash, setShowSplash] = useState(true);
-  const [showModal, setShowModal] = useState<boolean>(false);
+const [showSplash, setShowSplash] = useState(true);
+const [showModal, setShowModal] = useState<boolean>(false);
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -328,44 +330,105 @@ export default function TabScanLanding() {
       `}</style>
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
-          <div className="flex items-center">
-            <img 
-              src="/tabscan-logo.png" 
-              alt="TabScan" 
-              className="h-16 w-auto"
-            />
-          </div>
-          
-          <div className="hidden md:flex gap-8 items-center">
-            <button 
-              onClick={() => scrollToSection('features')}
-              className="text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300"
-            >
-              Features
-            </button>
-            <button 
-              onClick={() => scrollToSection('pricing')}
-              className="text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300"
-            >
-              Pricing
-            </button>
-            <button 
-              onClick={() => scrollToSection('faq')}
-              className="text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300"
-            >
-              FAQ
-            </button>
-            <button 
-              onClick={() => setShowModal(true)}
-              className="px-6 py-2.5 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition-all duration-300"
-            >
-              Demo
-            </button>
-          </div>
-        </div>
-      </nav>
+     <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-100 z-40">
+  <div className="max-w-7xl mx-auto px-6 py-2 flex justify-between items-center">
+    <div className="flex items-center">
+      <img 
+        src="/tabscan-logo.png" 
+        alt="TabScan" 
+        className="h-24 w-auto"
+      />
+    </div>
+    
+    <div className="hidden md:flex gap-8 items-center">
+      <button 
+        onClick={() => scrollToSection('features')}
+        className="text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300"
+      >
+        Features
+      </button>
+      <button 
+        onClick={() => scrollToSection('pricing')}
+        className="text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300"
+      >
+        Pricing
+      </button>
+      <button 
+        onClick={() => scrollToSection('faq')}
+        className="text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300"
+      >
+        FAQ
+      </button>
+      <Link 
+        href="/blog"
+        className="text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300"
+      >
+        Blog
+      </Link>
+      <button 
+        onClick={() => setShowModal(true)}
+        className="px-6 py-2.5 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition-all duration-300"
+      >
+        Demo
+      </button>
+    </div>
+
+    <button 
+      className="md:hidden p-2"
+      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+    >
+      {mobileMenuOpen ? <X size={24} /> : <MenuIcon size={24} />}
+    </button>
+  </div>
+
+  {mobileMenuOpen && (
+    <div className="md:hidden border-t border-slate-100 p-6 space-y-4">
+      <button 
+        onClick={() => {
+          scrollToSection('features');
+          setMobileMenuOpen(false);
+        }}
+        className="block w-full text-left text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300 py-2"
+      >
+        Features
+      </button>
+      <button 
+        onClick={() => {
+          scrollToSection('pricing');
+          setMobileMenuOpen(false);
+        }}
+        className="block w-full text-left text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300 py-2"
+      >
+        Pricing
+      </button>
+      <button 
+        onClick={() => {
+          scrollToSection('faq');
+          setMobileMenuOpen(false);
+        }}
+        className="block w-full text-left text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300 py-2"
+      >
+        FAQ
+      </button>
+      <Link 
+        href="/blog"
+        className="block text-sm font-medium text-slate-600 hover:text-red-600 transition-colors duration-300 py-2"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        Blog
+      </Link>
+      <button 
+        onClick={() => {
+          setShowModal(true);
+          setMobileMenuOpen(false);
+        }}
+        className="w-full mt-4 px-6 py-2.5 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition-all duration-300"
+      >
+        Demo
+      </button>
+    </div>
+  )}
+</nav>
 
       {/* Hero Section */}
       <section className="pt-40 pb-24 px-6">
@@ -602,8 +665,14 @@ export default function TabScanLanding() {
           <div className="text-sm text-slate-600">
             © 2024 TabScan. Alle Rechte vorbehalten.
           </div>
-          <div className="flex items-center gap-2 text-sm text-slate-600">
-            Made with ❤️ in Switzerland
+          <div className="flex items-center gap-6 text-sm text-slate-600">
+            <Link href="/blog" className="hover:text-slate-900 transition-colors">
+              Blog
+            </Link>
+            <span>•</span>
+            <div className="flex items-center gap-2">
+              Made with ❤️ in Switzerland
+            </div>
           </div>
         </div>
       </footer>
