@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, Check, Menu, Smartphone, TrendingUp, Users, Lock, Zap, Shield, Rocket, X, MenuIcon, ChevronDown, Database, Eye, Package } from 'lucide-react';
+import { ChevronRight, Check, Menu, Smartphone, TrendingUp, Users, Lock, Zap, Shield, Rocket, X, MenuIcon, ChevronDown, Database, Eye, Package, UtensilsCrossed, ShoppingCart, ChefHat, Package2, BarChart3, Monitor } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -13,6 +13,69 @@ interface FormData {
 interface FAQItem {
   question: string;
   answer: string;
+}
+
+// Elegant Icon Components
+function MenuIcon2D() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M3 6h18M3 12h18M3 18h18" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function OrderIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M9 2L6 6H3C1.9 6 1 6.9 1 8v11c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-3L15 2H9z" strokeLinecap="round" strokeLinejoin="round"/>
+      <circle cx="12" cy="13" r="3.5" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+  );
+}
+
+function KitchenIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <path d="M8 17v2M16 17v2M12 3v4M5 8h14M5 11h14"/>
+      <circle cx="6" cy="6" r="1.5"/>
+      <circle cx="12" cy="6" r="1.5"/>
+      <circle cx="18" cy="6" r="1.5"/>
+    </svg>
+  );
+}
+
+function InventoryIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M3 4h18v2H3V4zm0 4h18v10H3V8zm2 2v6m4-6v6m4-6v6m4-6v6"/>
+      <path d="M5 6l7-3 7 3"/>
+      <path d="M12 3v1"/>
+    </svg>
+  );
+}
+
+function MonitoringIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <rect x="2" y="3" width="20" height="14" rx="2"/>
+      <path d="M8 17h8"/>
+      <path d="M9 21h6"/>
+      <path d="M6 8l3 3 2-2 3 4 2-3"/>
+    </svg>
+  );
+}
+
+function AnalyticsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M3 3v18h18"/>
+      <path d="M4 18l4-6 3 2 5-8"/>
+      <circle cx="8" cy="12" r="1"/>
+      <circle cx="12" cy="14" r="1"/>
+      <circle cx="17" cy="6" r="1"/>
+    </svg>
+  );
 }
 
 // Parallax Splash Screen
@@ -134,15 +197,46 @@ export default function TabScanLanding() {
     message: ''
   });
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const [visibleFeatures, setVisibleFeatures] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const features = [
-    { emoji: '📱', title: 'Digitales Menü System', description: 'Speisekarten digital verwalten, QR-Codes, mehrsprachig' },
-    { emoji: '🛒', title: 'Online Bestellplattform', description: 'Gäste bestellen vom Handy, Payment-Integration' },
-    { emoji: '👨‍🍳', title: 'Kitchen Display', description: 'Echtzeit Bestellungen in der Küche, Effizienz' },
-    { emoji: '📦', title: 'Lagerverwaltung', description: 'Bestände überwachen, Auto-Benachrichtigungen' },
-    { emoji: '📊', title: 'Überwachung', description: 'Live Monitoring, Echtzeit-Updates, Alerts' },
-    { emoji: '📈', title: 'Analytics', description: 'Tagesumsatz, Bestseller, Gast-Verhalten' },
+    { 
+      icon: MenuIcon2D, 
+      title: 'Digitales Menü System', 
+      description: 'Speisekarten digital verwalten, QR-Codes, mehrsprachig',
+      color: 'from-blue-500 to-blue-600'
+    },
+    { 
+      icon: OrderIcon, 
+      title: 'Online Bestellplattform', 
+      description: 'Gäste bestellen vom Handy, Payment-Integration',
+      color: 'from-emerald-500 to-emerald-600'
+    },
+    { 
+      icon: KitchenIcon, 
+      title: 'Kitchen Display', 
+      description: 'Echtzeit Bestellungen in der Küche, Effizienz',
+      color: 'from-orange-500 to-orange-600'
+    },
+    { 
+      icon: InventoryIcon, 
+      title: 'Lagerverwaltung', 
+      description: 'Bestände überwachen, Auto-Benachrichtigungen',
+      color: 'from-purple-500 to-purple-600'
+    },
+    { 
+      icon: MonitoringIcon, 
+      title: 'Überwachung', 
+      description: 'Live Monitoring, Echtzeit-Updates, Alerts',
+      color: 'from-pink-500 to-pink-600'
+    },
+    { 
+      icon: AnalyticsIcon, 
+      title: 'Analytics & Reporting', 
+      description: 'Tagesumsatz, Bestseller, Gast-Verhalten',
+      color: 'from-indigo-500 to-indigo-600'
+    },
   ];
 
   const useCases = [
@@ -187,17 +281,46 @@ export default function TabScanLanding() {
       ...prev,
       [name]: value
     }));
+    setError('');
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsLoading(true);
+    setError('');
     
-    setTimeout(() => {
-      setShowModal(false);
-      setFormData({ name: '', email: '', restaurant: '', message: '' });
-      setSubmitted(false);
-    }, 2000);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitted(true);
+        
+        setTimeout(() => {
+          setShowModal(false);
+          setFormData({ name: '', email: '', restaurant: '', message: '' });
+          setSubmitted(false);
+          setIsLoading(false);
+        }, 2000);
+      } else {
+        const errorMessage = typeof data.error === 'string' 
+          ? data.error 
+          : (data.error?.message || 'Email konnte nicht versendet werden');
+        setError(errorMessage);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Fehler beim Versenden. Bitte versuche es später erneut.');
+      setIsLoading(false);
+    }
   };
 
   const scrollToSection = (elementId: string) => {
@@ -232,42 +355,32 @@ export default function TabScanLanding() {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-15px); }
         }
-        @keyframes scale-in {
-          from { opacity: 0; transform: scale(0.5); }
-          to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes rotate-in {
-          from { opacity: 0; transform: rotate(-10deg) scale(0.8); }
-          to { opacity: 1; transform: rotate(0deg) scale(1); }
-        }
         @keyframes glow-pulse {
           0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.3); }
           50% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.6); }
         }
-        @keyframes text-shimmer {
-          0% { background-position: -1000px 0; }
-          100% { background-position: 1000px 0; }
+        @keyframes slide-down {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
           25% { transform: translateX(-5px); }
           75% { transform: translateX(5px); }
         }
-        @keyframes slide-down {
-          from { opacity: 0; transform: translateY(-20px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes icon-float {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-8px) scale(1.05); }
         }
 
         .animate-slide-up { animation: slide-up 0.8s ease-out; }
         .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
         .animate-bounce-in { animation: bounce-in 0.5s ease-out; }
         .animate-float { animation: float 4s ease-in-out infinite; }
-        .animate-scale-in { animation: scale-in 0.6s ease-out; }
-        .animate-rotate-in { animation: rotate-in 0.6s ease-out; }
         .animate-glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
-        .animate-text-shimmer { animation: text-shimmer 3s ease-in-out infinite; }
-        .animate-shake { animation: shake 0.5s ease-out; }
         .animate-slide-down { animation: slide-down 0.6s ease-out; }
+        .animate-shake { animation: shake 0.5s ease-out; }
+        .animate-icon-float { animation: icon-float 3s ease-in-out infinite; }
 
         .gradient-text { 
           background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
@@ -296,34 +409,8 @@ export default function TabScanLanding() {
         .usecase-card:nth-child(5) { animation-delay: 0.45s; }
         .usecase-card:nth-child(6) { animation-delay: 0.55s; }
 
-        .icon-bounce {
-          animation: bounce 2s ease-in-out infinite;
-        }
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-
-        .icon-spin {
-          animation: spin 3s linear infinite;
-        }
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-
         .text-glow {
           text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
-        }
-
-        .hero-particles {
-          position: relative;
-        }
-
-        .particle {
-          position: absolute;
-          pointer-events: none;
-          opacity: 0.5;
         }
       `}</style>
 
@@ -402,7 +489,7 @@ export default function TabScanLanding() {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-red-50 pt-12 sm:pt-20 pb-20 sm:pb-32 hero-particles">
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-red-50 pt-12 sm:pt-20 pb-20 sm:pb-32">
         <div className="absolute top-0 right-0 w-96 h-96 bg-red-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-slate-100 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style={{ animationDelay: '2s' }}></div>
         
@@ -425,7 +512,7 @@ export default function TabScanLanding() {
                 onClick={() => setShowModal(true)}
                 className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-8 sm:px-10 py-4 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:shadow-2xl hover:shadow-red-600/50 transition-all duration-300 transform hover:scale-110 w-full sm:w-auto flex items-center justify-center gap-2 animate-glow-pulse"
               >
-                <Rocket size={20} className="group-hover:icon-spin" />
+                <Rocket size={20} />
                 Kostenlose Demo
                 <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
@@ -456,7 +543,7 @@ export default function TabScanLanding() {
         </div>
       </section>
 
-      {/* PORTFOLIO SECTION */}
+      {/* PORTFOLIO SECTION - ELEGANT ICONS */}
       <section id="portfolio" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <div className="text-center mb-12 sm:mb-16 animate-slide-up">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 mb-4">
@@ -468,22 +555,25 @@ export default function TabScanLanding() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {features.map((feature, idx) => (
-            <div 
-              key={idx} 
-              className="feature-card group bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 sm:p-8 hover:border-red-300 hover:shadow-2xl hover:shadow-red-600/20 transition-all duration-300 hover:-translate-y-2"
-            >
-              <div className="text-5xl mb-5 group-hover:animate-float group-hover:scale-125 transition-all duration-300">
-                {feature.emoji}
+          {features.map((feature, idx) => {
+            const IconComponent = feature.icon;
+            return (
+              <div 
+                key={idx} 
+                className="feature-card group bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 sm:p-8 hover:border-red-300 hover:shadow-2xl hover:shadow-red-600/20 transition-all duration-300 hover:-translate-y-2"
+              >
+                <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-5 group-hover:animate-icon-float transition-all duration-300 text-white shadow-lg`}>
+                  <IconComponent />
+                </div>
+                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2 group-hover:text-red-600 transition">
+                  {feature.title}
+                </h3>
+                <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2 group-hover:text-red-600 transition">
-                {feature.title}
-              </h3>
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -530,23 +620,23 @@ export default function TabScanLanding() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {[
-            { emoji: '⚡', title: 'Blitzschnell Setup', desc: '5 Minuten einsatzbereit' },
-            { emoji: '📱', title: 'Mobile First', desc: '100% optimiert für Handys' },
-            { emoji: '🔒', title: 'Sicher & DSGVO', desc: 'Schweizer Server, verschlüsselt' },
-            { emoji: '📊', title: 'Echtzeit Analytics', desc: 'Daten-Insights sofort' },
-            { emoji: '🔌', title: 'Flexible Integration', desc: 'Passt sich an deine Systeme an' },
-            { emoji: '👥', title: 'Dedicated Support', desc: 'Schweizer Team 24/7' }
+            { icon: '⚡', title: 'Blitzschnell Setup', desc: '5 Minuten einsatzbereit' },
+            { icon: '📱', title: 'Mobile First', desc: '100% optimiert für Handys' },
+            { icon: '🔒', title: 'Sicher & DSGVO', desc: 'Schweizer Server, verschlüsselt' },
+            { icon: '📊', title: 'Echtzeit Analytics', desc: 'Daten-Insights sofort' },
+            { icon: '🔌', title: 'Flexible Integration', desc: 'Passt sich an deine Systeme an' },
+            { icon: '👥', title: 'Dedicated Support', desc: 'Schweizer Team 24/7' }
           ].map((item, idx) => (
             <div 
               key={idx} 
               className="flex gap-4 sm:gap-6 animate-fade-in-up"
               style={{ animationDelay: `${idx * 0.1}s` }}
             >
-              <div className="text-4xl group-hover:animate-bounce">
-                {item.emoji}
+              <div className="text-4xl">
+                {item.icon}
               </div>
               <div>
-                <h3 className="font-bold text-slate-900 mb-1 group-hover:text-red-600 transition">{item.title}</h3>
+                <h3 className="font-bold text-slate-900 mb-1">{item.title}</h3>
                 <p className="text-sm text-slate-600">{item.desc}</p>
               </div>
             </div>
@@ -554,7 +644,7 @@ export default function TabScanLanding() {
         </div>
       </section>
 
-      {/* PRICING SECTION - FLEXIBLE */}
+      {/* PRICING SECTION */}
       <section className="bg-gradient-to-br from-slate-50 to-red-50 py-12 sm:py-20 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-2 sm:mb-4 text-center animate-slide-up">
@@ -575,7 +665,7 @@ export default function TabScanLanding() {
                 className="border-2 border-slate-300 rounded-2xl p-6 sm:p-8 hover:shadow-xl transition-all duration-300 hover:border-red-300 bg-white animate-fade-in-up hover:scale-105"
                 style={{ animationDelay: `${idx * 0.15}s` }}
               >
-                <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-red-600">{plan.title}</h3>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.title}</h3>
                 <p className="text-slate-600 text-sm mb-6">{plan.description}</p>
                 <p className="text-sm text-slate-600 mb-6 font-semibold">Flexible Preise</p>
                 <ul className="space-y-3 mb-8">
@@ -629,9 +719,9 @@ export default function TabScanLanding() {
             onClick={() => setShowModal(true)}
             className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-10 sm:px-14 py-5 sm:py-6 rounded-2xl font-black text-lg sm:text-xl hover:shadow-2xl hover:shadow-red-600/50 transition-all duration-300 transform hover:scale-110 inline-flex items-center gap-3 animate-glow-pulse"
           >
-            <Rocket size={24} className="group-hover:animate-bounce" />
+            <Rocket size={24} />
             Demo starten
-            <ChevronRight size={24} className="group-hover:translate-x-2 transition-transform" />
+            <ChevronRight size={24} />
           </button>
         </div>
       </section>
@@ -679,6 +769,12 @@ export default function TabScanLanding() {
                   Lass uns deine Anforderungen besprechen
                 </p>
 
+                {error && (
+                  <div className="mb-4 p-3 bg-red-100 border-l-4 border-red-600 text-red-700 text-sm rounded animate-shake">
+                    ⚠️ {error}
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                     <label className="block text-xs sm:text-sm font-bold text-slate-900 mb-2 uppercase">Name</label>
@@ -688,7 +784,8 @@ export default function TabScanLanding() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition hover:border-red-300"
+                      disabled={isLoading}
+                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition hover:border-red-300 disabled:bg-slate-100"
                       placeholder="Dein Name"
                     />
                   </div>
@@ -701,7 +798,8 @@ export default function TabScanLanding() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition hover:border-red-300"
+                      disabled={isLoading}
+                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition hover:border-red-300 disabled:bg-slate-100"
                       placeholder="deine@email.ch"
                     />
                   </div>
@@ -713,7 +811,8 @@ export default function TabScanLanding() {
                       name="restaurant"
                       value={formData.restaurant}
                       onChange={handleInputChange}
-                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition hover:border-red-300"
+                      disabled={isLoading}
+                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition hover:border-red-300 disabled:bg-slate-100"
                       placeholder="Name deines Betriebs"
                     />
                   </div>
@@ -724,17 +823,20 @@ export default function TabScanLanding() {
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
-                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition h-24 resize-none hover:border-red-300"
+                      required
+                      disabled={isLoading}
+                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition h-24 resize-none hover:border-red-300 disabled:bg-slate-100"
                       placeholder="z.B. Menü, Bestellungen, Kitchen..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-lg font-bold hover:shadow-lg hover:shadow-red-600/50 transition-all duration-300 text-sm sm:text-base transform hover:scale-105 animate-fade-in-up"
+                    disabled={isLoading}
+                    className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-lg font-bold hover:shadow-lg hover:shadow-red-600/50 transition-all duration-300 text-sm sm:text-base transform hover:scale-105 animate-fade-in-up disabled:opacity-50 disabled:cursor-not-allowed"
                     style={{ animationDelay: '0.5s' }}
                   >
-                    Demo anfordern 🚀
+                    {isLoading ? '⏳ Wird gesendet...' : 'Demo anfordern 🚀'}
                   </button>
                 </form>
 
