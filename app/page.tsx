@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, Check, Menu, Smartphone, TrendingUp, Users, Calendar, MapPin, X, MenuIcon, ChevronDown, Play, Zap, Shield, Rocket, Image } from 'lucide-react';
+import { ChevronRight, Check, Menu, Smartphone, TrendingUp, Users, Lock, Zap, Shield, Rocket, X, MenuIcon, ChevronDown, Database, Eye, Package, Utensils, BarChart3 } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -13,6 +13,18 @@ interface FormData {
 interface FAQItem {
   question: string;
   answer: string;
+}
+
+interface Feature {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+interface UseCase {
+  emoji: string;
+  title: string;
+  description: string;
 }
 
 // Parallax Splash Screen
@@ -113,7 +125,7 @@ function FAQItemComponent({ item }: { item: FAQItem }) {
       </button>
       
       {isOpen && (
-        <div className="px-5 sm:px-6 pb-5 sm:pb-6 border-t border-red-100 bg-red-50 animate-in fade-in">
+        <div className="px-5 sm:px-6 pb-5 sm:pb-6 border-t border-red-100 bg-red-50">
           <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
             {item.answer}
           </p>
@@ -134,32 +146,97 @@ export default function TabScanLanding() {
     message: ''
   });
   const [submitted, setSubmitted] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'menu' | 'imbiss'>('menu');
+
+  const features: Feature[] = [
+    {
+      icon: <Utensils size={28} className="text-red-600" />,
+      title: 'Digitales Menü System',
+      description: 'Speisekarten digital verwalten, QR-Codes generieren, Mehrsprachigkeit, Bilder & Beschreibungen'
+    },
+    {
+      icon: <ShoppingCart size={28} className="text-red-600" />,
+      title: 'Online Bestellplattform',
+      description: 'Gäste bestellen direkt vom Handy, Payment-Integration, Order-Tracking'
+    },
+    {
+      icon: <Eye size={28} className="text-red-600" />,
+      title: 'Kitchen Display System',
+      description: 'Echtzeit Bestellungen in der Küche, Status-Management, Effizienz-Optimierung'
+    },
+    {
+      icon: <Package size={28} className="text-red-600" />,
+      title: 'Intelligente Lagerverwaltung',
+      description: 'Bestände überwachen, Automatische Benachrichtigungen, Verfügbarkeit steuern'
+    },
+    {
+      icon: <Eye size={28} className="text-red-600" />,
+      title: 'Überwachungssysteme',
+      description: 'Live Monitoring, Echtzeit-Updates, Alarm-Management'
+    },
+    {
+      icon: <BarChart3 size={28} className="text-red-600" />,
+      title: 'Analytics & Reporting',
+      description: 'Tagesumsatz, Bestseller, Gast-Verhalten, Daten-Insights'
+    },
+  ];
+
+  const useCases: UseCase[] = [
+    {
+      emoji: '🏨',
+      title: 'Premium Restaurants & Dining',
+      description: 'Gehobene Gastronomie mit digitalem Service-Erlebnis'
+    },
+    {
+      emoji: '🌮',
+      title: 'Imbisse & Fast Food',
+      description: 'Schnelle Bestellungen, Online Payment, Warteschlangen reduzieren'
+    },
+    {
+      emoji: '☕',
+      title: 'Cafés & Bars',
+      description: 'Flexible Menü-Verwaltung, Echtzeit-Updates'
+    },
+    {
+      emoji: '🍕',
+      title: 'Pizzerien & Takeaway',
+      description: 'Order-Management, Zubereitungszeit-Tracking'
+    },
+    {
+      emoji: '🚴',
+      title: 'Lieferdienste',
+      description: 'Integration mit Delivery-Plattformen, Tracking'
+    },
+    {
+      emoji: '👨‍🍳',
+      title: 'Catering & Events',
+      description: 'Flexible Menü-Verwaltung für Events, Gruppenbuchungen'
+    },
+  ];
 
   const faqItems: FAQItem[] = [
     {
-      question: "Was ist TabScan Menü?",
-      answer: "TabScan Menü ist eine digitale Speisekartenlösung für gehobene Restaurants. Gäste scannen einen QR-Code, sehen das Menü auf dem Handy, und können optional bestellen. Mit Kitchen Display System und Live-Analytics."
+      question: 'Was ist TabScan genau?',
+      answer: 'TabScan ist eine Plattform für digitale Gastronomie-Lösungen. Wir bieten modulare Features wie digitale Menüs, Bestellsysteme, Kitchen Display, Lagerverwaltung und Analytics - je nachdem was dein Restaurant braucht.'
     },
     {
-      question: "Was ist TabScan Imbiss Order?",
-      answer: "TabScan Imbiss Order ist speziell für Kebab-Stände, Burger-Läden und Imbisse. Kunden bestellen UND bezahlen online (TWINT, Karte, Apple Pay, Google Pay), erhalten SMS-Updates, und kein Warten an der Kasse."
+      question: 'Können wir unsere bestehende Hardware nutzen?',
+      answer: 'Ja! TabScan ist hardware-agnostisch. Du kannst deine bestehenden Systeme integrieren oder neue hinzufügen. Wir unterstützen flexible Integration.'
     },
     {
-      question: "Welche Zahlungsmethoden unterstützen wir?",
-      answer: "TabScan Menü: Optional (Bestellungen möglich). TabScan Imbiss Order: TWINT, Kreditkarte (Visa/Mastercard), Apple Pay, Google Pay, und Bar mit SMS-Verifikation."
+      question: 'Wie schnell ist die Implementierung?',
+      answer: 'Zwischen 5 Minuten für Basic Setup bis 2-3 Wochen für Enterprise-Konfiguration mit Custom-Features. Es hängt ab von deinen Anforderungen.'
     },
     {
-      question: "Wie schnell ist das Setup?",
-      answer: "5 Minuten. Anmelden, Menü eingeben (oder hochladen), QR-Codes ausdrucken, fertig. Das Dashboard ist sofort einsatzbereit."
+      question: 'Ist das DSGVO-konform und sicher?',
+      answer: 'Absolut. Alle Daten sind verschlüsselt, auf Schweizer Servern, DSGVO-konform und mit höchsten Sicherheitsstandards geschützt.'
     },
     {
-      question: "Funktioniert es auch auf Smartphones?",
-      answer: "100%. Beide Apps sind vollständig mobil-optimiert. Das ist der gesamte Fokus — perfekt für Handy-Nutzer."
+      question: 'Können wir mehrere Standorte verwalten?',
+      answer: 'Ja! TabScan ist multi-location fähig. Ein Dashboard für alle deine Standorte oder separate Management - ganz wie du möchtest.'
     },
     {
-      question: "Können wir mehrere Standorte haben?",
-      answer: "Ja! Beide Systeme sind multi-location fähig. Jeder Standort bekommt eine eigene sichere URL und sein eigenes Dashboard."
+      question: 'Wie funktioniert die Preisgestaltung?',
+      answer: 'Wir bieten flexible Lösungen für jede Größe. Von Starter-Paketen für kleine Restaurants bis zu Custom-Enterprise-Lösungen. Kontaktiere uns für eine personalisierte Quote.'
     }
   ];
 
@@ -231,28 +308,28 @@ export default function TabScanLanding() {
           
           <div className="hidden md:flex gap-6 sm:gap-8 items-center">
             <button 
-              onClick={() => scrollToSection('menu')}
+              onClick={() => scrollToSection('portfolio')}
               className="text-sm text-slate-600 hover:text-red-600 font-medium transition duration-300"
             >
-              Menü
+              Portfolio
             </button>
             <button 
-              onClick={() => scrollToSection('imbiss')}
+              onClick={() => scrollToSection('usecases')}
               className="text-sm text-slate-600 hover:text-red-600 font-medium transition duration-300"
             >
-              Imbiss Order
+              Für Wen
             </button>
             <button 
-              onClick={() => scrollToSection('preise')}
+              onClick={() => scrollToSection('faq')}
               className="text-sm text-slate-600 hover:text-red-600 font-medium transition duration-300"
             >
-              Preise
+              FAQ
             </button>
             <button 
               onClick={openModal}
               className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-2 rounded-lg text-sm font-bold hover:shadow-lg hover:shadow-red-600/50 transition-all duration-300 transform hover:scale-105"
             >
-              Starten
+              Demo Starten
             </button>
           </div>
 
@@ -267,28 +344,28 @@ export default function TabScanLanding() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-slate-200 px-4 py-4 space-y-3 animate-slide-up">
             <button 
-              onClick={() => scrollToSection('menu')}
+              onClick={() => scrollToSection('portfolio')}
               className="block w-full text-left text-sm text-slate-600 hover:text-red-600 font-medium py-2"
             >
-              Menü
+              Portfolio
             </button>
             <button 
-              onClick={() => scrollToSection('imbiss')}
+              onClick={() => scrollToSection('usecases')}
               className="block w-full text-left text-sm text-slate-600 hover:text-red-600 font-medium py-2"
             >
-              Imbiss Order
+              Für Wen
             </button>
             <button 
-              onClick={() => scrollToSection('preise')}
+              onClick={() => scrollToSection('faq')}
               className="block w-full text-left text-sm text-slate-600 hover:text-red-600 font-medium py-2"
             >
-              Preise
+              FAQ
             </button>
             <button 
               onClick={openModal}
               className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-3 rounded-lg text-sm font-bold hover:shadow-lg transition-all duration-300"
             >
-              Starten
+              Demo Starten
             </button>
           </div>
         )}
@@ -302,342 +379,238 @@ export default function TabScanLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center animate-slide-up max-w-3xl mx-auto">
             <div className="inline-block bg-red-100 text-red-600 px-4 py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 sm:mb-6">
-              🇨🇭 Schweizer Bestelllösungen
+              🇨🇭 100% Schweizer Lösung
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 mb-4 sm:mb-6 leading-tight">
-              Zwei Lösungen. <span className="gradient-text">Ein Ziel.</span>
+              Digitale Lösungen für die <span className="gradient-text">Gastronomie</span>
             </h1>
             
             <p className="text-lg sm:text-xl md:text-2xl text-slate-600 mb-8 sm:mb-10 leading-relaxed font-medium">
-              TabScan Menü für gehobene Restaurants. TabScan Imbiss Order für Kebab, Burger & Imbisse.
+              Digitale Menüs • Bestellsysteme • Kitchen Management • Lagerverwaltung • Überwachung • Analytics
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center mb-12 sm:mb-16">
               <button 
-                onClick={() => { scrollToSection('menu'); }}
+                onClick={openModal}
                 className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-8 sm:px-10 py-4 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:shadow-2xl hover:shadow-red-600/50 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto flex items-center justify-center gap-2"
               >
-                <Smartphone size={20} />
-                TabScan Menü
-                <ChevronRight size={20} />
+                <Rocket size={20} />
+                Kostenlose Demo
+                <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </button>
               
               <button 
-                onClick={() => { scrollToSection('imbiss'); }}
+                onClick={openModal}
                 className="group relative border-2 border-slate-300 text-slate-900 px-8 sm:px-10 py-4 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:border-red-600 hover:bg-red-50 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto flex items-center justify-center gap-2"
               >
-                <Zap size={20} />
-                Imbiss Order
+                Team kontaktieren
               </button>
             </div>
 
             <div className="grid grid-cols-3 gap-6 sm:gap-8">
               <div className="group">
-                <div className="text-2xl sm:text-3xl font-black text-red-600">20+</div>
-                <p className="text-xs sm:text-sm text-slate-600 group-hover:text-red-600 transition">Restaurants aktiv</p>
+                <div className="text-2xl sm:text-3xl font-black text-red-600">1000+</div>
+                <p className="text-xs sm:text-sm text-slate-600 group-hover:text-red-600 transition">Features</p>
               </div>
               <div className="group">
-                <div className="text-2xl sm:text-3xl font-black text-red-600">5 Min</div>
-                <p className="text-xs sm:text-sm text-slate-600 group-hover:text-red-600 transition">Setup</p>
+                <div className="text-2xl sm:text-3xl font-black text-red-600">Flexibel</div>
+                <p className="text-xs sm:text-sm text-slate-600 group-hover:text-red-600 transition">Skalierbar</p>
               </div>
               <div className="group">
-                <div className="text-2xl sm:text-3xl font-black text-red-600">CHF 49+</div>
-                <p className="text-xs sm:text-sm text-slate-600 group-hover:text-red-600 transition">Pro Monat</p>
+                <div className="text-2xl sm:text-3xl font-black text-red-600">24/7</div>
+                <p className="text-xs sm:text-sm text-slate-600 group-hover:text-red-600 transition">Support</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TABSCAN MENÜ SECTION */}
-      <section id="menu" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+      {/* PORTFOLIO SECTION */}
+      <section id="portfolio" className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <div className="text-center mb-12 sm:mb-16 animate-slide-up">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 mb-4">
-            <span className="gradient-text">TabScan Menü</span>
+            Unser <span className="gradient-text">Portfolio</span>
           </h2>
           <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
-            Für gehobene Restaurants, Bars & Cafés. Digitale Speisekarten mit QR-Codes, Kitchen Display & Live Analytics.
+            Wir bieten modulare Lösungen - nimm was du brauchst, erweitere später
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center mb-12">
-          {/* TEXT */}
-          <div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-6">Für wen?</h3>
-            <ul className="space-y-3 sm:space-y-4 mb-8">
-              {[
-                'Premium Restaurants & Dining',
-                'Gehobene Bars & Lounges',
-                'Cafés mit hohem Standard',
-                'Multilingual Service (DE/EN/AR)',
-                'Professional Kitchen Display',
-                'Echtzeit Analytics & Stats'
-              ].map((feature, i) => (
-                <li key={i} className="flex items-center gap-3 text-slate-700">
-                  <Check size={20} className="text-red-600 flex-shrink-0" />
-                  <span className="text-sm sm:text-base">{feature}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="bg-red-50 border-l-4 border-red-600 p-4 sm:p-6 rounded">
-              <p className="text-sm sm:text-base font-semibold text-slate-900 mb-2">Echte Kunden:</p>
-              <div className="flex flex-wrap gap-3">
-                <span className="bg-white px-3 py-2 rounded border border-red-200 text-xs font-semibold text-slate-900">👑 Royal</span>
-                <span className="bg-white px-3 py-2 rounded border border-red-200 text-xs font-semibold text-slate-900">🔥 KULT</span>
-                <span className="bg-white px-3 py-2 rounded border border-red-200 text-xs font-semibold text-slate-900">✨ Golden Club</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {features.map((feature, idx) => (
+            <div 
+              key={idx} 
+              className="group bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 sm:p-8 hover:border-red-300 hover:shadow-xl transition-all duration-300 hover-lift"
+            >
+              <div className="w-16 h-16 bg-gradient-to-br from-red-50 to-orange-50 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 border-2 border-red-200">
+                {feature.icon}
               </div>
+              <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2 group-hover:text-red-600 transition">
+                {feature.title}
+              </h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                {feature.description}
+              </p>
             </div>
-          </div>
-
-          {/* SCREENSHOTS PLACEHOLDER */}
-          <div className="space-y-3 sm:space-y-4">
-            <div className="bg-gradient-to-br from-slate-200 to-slate-300 rounded-2xl aspect-video flex items-center justify-center border-2 border-dashed border-slate-400">
-              <div className="text-center">
-                <Image size={48} className="mx-auto text-slate-500 mb-2" />
-                <p className="text-sm text-slate-600">KULT Menu Screenshot</p>
-                <p className="text-xs text-slate-500">(upload: /public/kult-menu.png)</p>
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg aspect-square flex items-center justify-center border-2 border-dashed border-slate-400">
-                <div className="text-center">
-                  <Image size={32} className="mx-auto text-slate-500 mb-1" />
-                  <p className="text-xs text-slate-600">Golden Club 1</p>
-                </div>
-              </div>
-              <div className="bg-gradient-to-br from-slate-200 to-slate-300 rounded-lg aspect-square flex items-center justify-center border-2 border-dashed border-slate-400">
-                <div className="text-center">
-                  <Image size={32} className="mx-auto text-slate-500 mb-1" />
-                  <p className="text-xs text-slate-600">Golden Club 2</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* LIVE DEMO & PRICING */}
-        <div className="bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-2xl p-6 sm:p-8 text-center">
-          <h4 className="text-lg sm:text-xl font-bold text-slate-900 mb-4">Live Demos ansehen:</h4>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-            <a href="https://royal.tabscan.ch" target="_blank" rel="noopener noreferrer" className="bg-white border-2 border-red-600 text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-red-50 transition text-sm sm:text-base">
-              Royal.tabscan.ch →
-            </a>
-            <a href="https://kult.tabscan.ch" target="_blank" rel="noopener noreferrer" className="bg-white border-2 border-red-600 text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-red-50 transition text-sm sm:text-base">
-              KULT.tabscan.ch →
-            </a>
-            <a href="https://golden-club.tabscan.ch" target="_blank" rel="noopener noreferrer" className="bg-white border-2 border-red-600 text-red-600 px-6 py-2 rounded-lg font-semibold hover:bg-red-50 transition text-sm sm:text-base">
-              Golden-Club.tabscan.ch →
-            </a>
-          </div>
-          <p className="text-slate-600 text-sm sm:text-base">
-            <strong>Preis:</strong> CHF 49/Monat (Basic) | CHF 99/Monat (Pro) | CHF 199/Monat (Business)
-          </p>
+          ))}
         </div>
       </section>
 
-      {/* TABSCAN IMBISS ORDER SECTION */}
-      <section id="imbiss" className="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-12 sm:py-20">
+      {/* USE CASES SECTION */}
+      <section id="usecases" className="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-12 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 sm:mb-16 animate-slide-up">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
-              TabScan Imbiss Order
+              Für jeden Restaurant-Typ
             </h2>
             <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
-              Online-Bestellungen + Payment für Kebab, Burger & Imbisse. Keine Warteschlangen mehr.
+              Von Premium-Restaurants bis zu Imbissen - TabScan passt sich an deine Bedürfnisse an
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-            {/* SCREENSHOTS */}
-            <div className="space-y-3 sm:space-y-4">
-              <div className="bg-gradient-to-br from-slate-700 to-slate-600 rounded-2xl aspect-video flex items-center justify-center border-2 border-dashed border-slate-500">
-                <div className="text-center">
-                  <Image size={48} className="mx-auto text-slate-400 mb-2" />
-                  <p className="text-sm text-slate-300">Imbiss Order App</p>
-                  <p className="text-xs text-slate-400">(upload: /public/imbiss-app.png)</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {useCases.map((useCase, idx) => (
+              <div 
+                key={idx}
+                className="group bg-slate-800 border-2 border-slate-700 rounded-2xl p-6 sm:p-8 hover:border-red-500 hover:bg-slate-700 transition-all duration-300 hover-lift"
+              >
+                <div className="text-4xl mb-4 group-hover:scale-125 transition-transform duration-300">
+                  {useCase.emoji}
                 </div>
+                <h3 className="text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-red-400 transition">
+                  {useCase.title}
+                </h3>
+                <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                  {useCase.description}
+                </p>
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="bg-gradient-to-br from-slate-700 to-slate-600 rounded-lg aspect-square flex items-center justify-center border-2 border-dashed border-slate-500">
-                  <div className="text-center">
-                    <Image size={32} className="mx-auto text-slate-400 mb-1" />
-                    <p className="text-xs text-slate-300">Order</p>
-                  </div>
-                </div>
-                <div className="bg-gradient-to-br from-slate-700 to-slate-600 rounded-lg aspect-square flex items-center justify-center border-2 border-dashed border-slate-500">
-                  <div className="text-center">
-                    <Image size={32} className="mx-auto text-slate-400 mb-1" />
-                    <p className="text-xs text-slate-300">Status</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* TEXT */}
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-6">Features:</h3>
-              <ul className="space-y-3 sm:space-y-4 mb-8">
-                {[
-                  '💳 Online Payment: Karte, TWINT, Apple Pay, Google Pay',
-                  '📱 SMS-Verifikation: Sichere Bar-Zahlung',
-                  '🍳 Kitchen Display: Echtzeit Bestellungen',
-                  '📊 Admin Dashboard: Tagesumsatz & Statistiken',
-                  '⏱️ Status Tracking: Kunden sehen was läuft',
-                  '🚀 Schnelle Integration: 5 Minuten Setup',
-                  '🇨🇭 100% Schweiz-optimiert: CHF, +41 Nummern'
-                ].map((feature, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-200">
-                    <Check size={20} className="text-green-400 flex-shrink-0" />
-                    <span className="text-sm sm:text-base">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="bg-slate-800 border-l-4 border-green-500 p-4 sm:p-6 rounded">
-                <p className="text-sm sm:text-base font-semibold text-white mb-3">Preis:</p>
-                <p className="text-2xl sm:text-3xl font-black text-green-400 mb-2">CHF 100/Monat</p>
-                <p className="text-xs sm:text-sm text-slate-400">NEU - Ideal für Imbisse & QSR</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* VERGLEICHSTABELLE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
-        <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-8 sm:mb-12 text-center">
-          Vergleich der zwei Lösungen
-        </h2>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm sm:text-base">
-            <thead>
-              <tr className="border-b-2 border-slate-300 bg-slate-50">
-                <th className="text-left py-4 px-4 font-black text-slate-900">Feature</th>
-                <th className="text-center py-4 px-4 font-bold text-slate-900">TabScan Menü</th>
-                <th className="text-center py-4 px-4 font-bold text-slate-900">TabScan Imbiss</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { feature: 'Online Bestellungen', menu: '✅', imbiss: '✅' },
-                { feature: 'Payment Integration', menu: '❌ Optional', imbiss: '✅ PFLICHT' },
-                { feature: 'Kitchen Display', menu: '✅', imbiss: '✅' },
-                { feature: 'SMS-Verifikation', menu: '❌', imbiss: '✅' },
-                { feature: 'Admin Dashboard', menu: '✅ Analytics', imbiss: '✅ + Tagesumsatz' },
-                { feature: 'Sprachen', menu: 'DE/EN/AR', imbiss: 'DE/FR' },
-                { feature: 'Zielgruppe', menu: 'Restaurants', imbiss: 'Imbisse/QSR' },
-                { feature: 'Preis/Monat', menu: 'CHF 49-199', imbiss: 'CHF 100' }
-              ].map((row, idx) => (
-                <tr key={idx} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                  <td className="py-4 px-4 font-semibold text-slate-900">{row.feature}</td>
-                  <td className="text-center py-4 px-4 text-slate-700">{row.menu}</td>
-                  <td className="text-center py-4 px-4 text-slate-700 font-semibold">{row.imbiss}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* TRUST SECTION - GENERISCHE RESTAURANT LOGOS */}
+      <section className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-12 sm:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <p className="text-center text-slate-400 text-xs sm:text-sm font-bold uppercase tracking-wider mb-10 sm:mb-12">
+            ⭐ Vertraut von hunderten Restaurants in der Schweiz
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-8 items-center justify-center">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div 
+                key={i}
+                className="bg-slate-800 border-2 border-slate-700 rounded-lg aspect-square flex items-center justify-center hover:border-red-500 hover:bg-slate-700 transition-all duration-300"
+              >
+                <div className="text-center">
+                  <Utensils size={32} className="mx-auto text-slate-500 mb-2" />
+                  <p className="text-xs text-slate-400">Restaurant {i}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* PRICING */}
-      <section id="preise" className="bg-gradient-to-br from-slate-50 to-red-50 py-12 sm:py-20 border-t border-slate-200">
+      {/* WHY TABSCAN SECTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4">
+            Warum <span className="gradient-text">TabScan?</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          {[
+            { icon: Zap, title: 'Blitzschnell Setup', desc: '5 Minuten einsatzbereit' },
+            { icon: Smartphone, title: 'Mobile First', desc: '100% optimiert für Handys' },
+            { icon: Lock, title: 'Sicher & DSGVO', desc: 'Schweizer Server, verschlüsselt' },
+            { icon: TrendingUp, title: 'Echtzeit Analytics', desc: 'Daten-Insights sofort verfügbar' },
+            { icon: Zap, title: 'Flexible Integration', desc: 'Passt sich an deine Systeme an' },
+            { icon: Users, title: 'Dedicated Support', desc: 'Schweizer Team 24/7' }
+          ].map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <div key={idx} className="flex gap-4 sm:gap-6">
+                <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Icon size={24} className="text-red-600" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900 mb-1">{item.title}</h3>
+                  <p className="text-sm text-slate-600">{item.desc}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* PRICING SECTION - FLEXIBLE */}
+      <section className="bg-gradient-to-br from-slate-50 to-red-50 py-12 sm:py-20 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-2 sm:mb-4 text-center">
-            Transparente Preise
+            Flexible Preisgestaltung
           </h2>
           <p className="text-center text-slate-600 mb-12 sm:mb-16 text-sm sm:text-base">
-            Wähle den Plan der zu dir passt. Keine versteckten Gebühren.
+            Für jede Größe. Für jedes Budget. Kein Verstecktes.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {/* TABSCAN MENÜ */}
-            <div className="border-2 border-slate-300 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:border-red-300 bg-white">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">TabScan Menü</h3>
-              
-              <div className="space-y-4 mb-8">
-                <div className="border-t pt-4">
-                  <p className="text-sm text-slate-600 mb-2">Basic Plan</p>
-                  <p className="text-3xl font-black text-red-600">CHF 49</p>
-                  <p className="text-xs text-slate-500">/Monat</p>
-                </div>
-
-                <div className="border-t pt-4">
-                  <p className="text-sm text-slate-600 mb-2">Pro Plan</p>
-                  <p className="text-3xl font-black text-red-600">CHF 99</p>
-                  <p className="text-xs text-slate-500">/Monat</p>
-                </div>
-
-                <div className="border-t pt-4">
-                  <p className="text-sm text-slate-600 mb-2">Business Plan</p>
-                  <p className="text-3xl font-black text-red-600">CHF 199</p>
-                  <p className="text-xs text-slate-500">/Monat</p>
-                </div>
-              </div>
-
-              <button 
-                onClick={openModal}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-lg font-bold hover:shadow-lg transition-all text-sm sm:text-base"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {[
+              {
+                title: 'Starter',
+                description: 'Für kleine Restaurants & Imbisse',
+                features: ['Digitales Menü', 'QR-Codes', 'Basic Analytics', 'Mobile App']
+              },
+              {
+                title: 'Growth',
+                description: 'Für wachsende Betriebe',
+                features: ['Alles von Starter +', 'Bestellsystem', 'Kitchen Display', 'Advanced Analytics', 'Multi-Location']
+              },
+              {
+                title: 'Enterprise',
+                description: 'Für große Ketten & Custom Lösungen',
+                features: ['Alles von Growth +', 'Custom Features', 'Dedicated Account Manager', 'API Access', 'White Label Option']
+              }
+            ].map((plan, idx) => (
+              <div 
+                key={idx}
+                className="border-2 border-slate-300 rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 hover:border-red-300 bg-white"
               >
-                TabScan Menü starten
-              </button>
-            </div>
-
-            {/* TABSCAN IMBISS - FEATURED */}
-            <div className="border-2 border-red-600 rounded-2xl p-6 bg-gradient-to-br from-red-50 to-white relative transform md:scale-105 z-10 hover:shadow-2xl transition-all duration-300">
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <span className="bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-1 rounded-full text-xs font-black">🔥 NEU</span>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">{plan.title}</h3>
+                <p className="text-slate-600 text-sm mb-6">{plan.description}</p>
+                <p className="text-sm text-slate-600 mb-6 font-semibold">Flexible Preise nach Anfrage</p>
+                <ul className="space-y-3 mb-8">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                      <Check size={18} className="text-red-600 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <button 
+                  onClick={openModal}
+                  className="w-full border-2 border-red-600 text-red-600 py-3 rounded-lg font-bold hover:bg-red-50 transition-all text-sm sm:text-base"
+                >
+                  {idx === 2 ? 'Anfrage stellen' : 'Mehr Info'}
+                </button>
               </div>
-
-              <h3 className="text-2xl font-bold text-slate-900 mb-6 mt-6">TabScan Imbiss Order</h3>
-              
-              <div className="mb-8">
-                <p className="text-sm text-slate-600 mb-2">Standard Plan</p>
-                <p className="text-4xl font-black text-red-600">CHF 100</p>
-                <p className="text-xs text-slate-500">/Monat</p>
-                <p className="text-xs text-slate-700 mt-3">✅ Alles inklusive</p>
-              </div>
-
-              <button 
-                onClick={openModal}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-lg font-bold hover:shadow-lg hover:shadow-red-600/50 transition-all text-sm sm:text-base transform hover:scale-105"
-              >
-                Imbiss Order starten
-              </button>
-            </div>
-
-            {/* KONTAKT */}
-            <div className="border-2 border-slate-300 rounded-2xl p-6 hover:shadow-lg transition-all duration-300 hover:border-red-300 bg-white">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">Custom Plan</h3>
-              
-              <p className="text-slate-600 mb-8">
-                Mehrere Standorte? Enterprise-Features? Besondere Wünsche?
-              </p>
-
-              <button 
-                onClick={openModal}
-                className="w-full border-2 border-red-600 text-red-600 py-3 rounded-lg font-bold hover:bg-red-50 transition-all text-sm sm:text-base"
-              >
-                Kontakt aufnehmen
-              </button>
-            </div>
+            ))}
           </div>
 
-          <p className="text-center text-slate-600 text-xs sm:text-sm">
-            ✅ 14 Tage kostenlos testen • Keine Kreditkarte nötig • Jederzeit kündbar
+          <p className="text-center text-slate-600 mt-8 sm:mt-12 text-xs sm:text-sm">
+            ✅ 14 Tage kostenlos testen • Flexible Laufzeiten • Kein Verstecktes
           </p>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
+      {/* FAQ SECTION */}
+      <section id="faq" className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-2 sm:mb-4 text-center">
           Häufig gestellte Fragen
         </h2>
         <p className="text-center text-slate-600 mb-8 sm:mb-12 text-sm sm:text-base">
-          Alles was du über TabScan Menü & Imbiss Order wissen solltest
+          Alles was du über TabScan wissen solltest
         </p>
 
         <div className="space-y-3 sm:space-y-4">
@@ -653,17 +626,17 @@ export default function TabScanLanding() {
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 sm:mb-6">
-            Bereit für die Zukunft?
+            Bereit, dein Restaurant zu digitalisieren?
           </h2>
           <p className="text-lg sm:text-xl md:text-2xl text-slate-200 mb-10 sm:mb-12">
-            Starte heute. 14 Tage kostenlos. Keine Kreditkarte nötig.
+            Starten wir mit einer kostenlosen Demo. Keine Verpflichtung.
           </p>
           <button 
             onClick={openModal}
             className="group relative bg-gradient-to-r from-red-600 to-red-700 text-white px-10 sm:px-14 py-5 sm:py-6 rounded-2xl font-black text-lg sm:text-xl hover:shadow-2xl hover:shadow-red-600/50 transition-all duration-300 transform hover:scale-110 inline-flex items-center gap-3"
           >
             <Rocket size={24} />
-            Jetzt starten
+            Demo starten
             <ChevronRight size={24} />
           </button>
         </div>
@@ -703,13 +676,13 @@ export default function TabScanLanding() {
               <div className="text-center py-8 animate-slide-up">
                 <div className="text-6xl mb-4">✅</div>
                 <h2 className="text-2xl font-black text-slate-900 mb-2">Vielen Dank!</h2>
-                <p className="text-slate-600 text-sm sm:text-base">Wir kontaktieren dich in Kürze. 🚀</p>
+                <p className="text-slate-600 text-sm sm:text-base">Unser Team kontaktiert dich in Kürze. 🚀</p>
               </div>
             ) : (
               <>
-                <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2">Kostenlos starten</h2>
+                <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2">Demo anfragen</h2>
                 <p className="text-slate-600 mb-6 text-sm sm:text-base">
-                  Wähle TabScan Menü oder Imbiss Order
+                  Lass uns deine spezifischen Anforderungen besprechen
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -747,7 +720,18 @@ export default function TabScanLanding() {
                       value={formData.restaurant}
                       onChange={handleInputChange}
                       className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition"
-                      placeholder="Dein Restaurant oder Imbiss"
+                      placeholder="Name deines Betriebs"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs sm:text-sm font-bold text-slate-900 mb-2 uppercase">Was interessiert dich?</label>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      className="w-full border-2 border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-red-600 focus:ring-2 focus:ring-red-600/50 transition h-24 resize-none"
+                      placeholder="z.B. Digital Menü, Bestellsystem, Kitchen Display..."
                     />
                   </div>
 
@@ -755,12 +739,12 @@ export default function TabScanLanding() {
                     type="submit"
                     className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-lg font-bold hover:shadow-lg hover:shadow-red-600/50 transition-all duration-300 text-sm sm:text-base transform hover:scale-105"
                   >
-                    Jetzt starten → 
+                    Demo anfordern →
                   </button>
                 </form>
 
                 <p className="text-xs text-slate-500 text-center mt-4">
-                  Kein Spam, versprochen! 🎯
+                  Wir werden uns in Kürze mit dir in Verbindung setzen 🎯
                 </p>
               </>
             )}
@@ -768,5 +752,27 @@ export default function TabScanLanding() {
         </div>
       )}
     </div>
+  );
+}
+
+// Icon component (ShoppingCart) that wasn't imported
+function ShoppingCart(props: any) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <circle cx="9" cy="21" r="1"></circle>
+      <circle cx="20" cy="21" r="1"></circle>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+    </svg>
   );
 }
